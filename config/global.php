@@ -7,12 +7,12 @@ define("DB_HOST","localhost");
 define("DB_NAME", "bancapp");
 
 //Usuario de la base de datos
-define("DB_USERNAME", "root");
-//define("DB_USERNAME", "ayrbussi_onandy");
+//define("DB_USERNAME", "root");
+define("DB_USERNAME", "onandy");
 
 //Contraseña del usuario de la base de datos
-define("DB_PASSWORD", "");
-//define("DB_PASSWORD", "onandy");
+//define("DB_PASSWORD", "");
+define("DB_PASSWORD", "Onandy");
 
 //definimos la codificacion de los caracteres
 define("DB_ENCODE", "utf8");

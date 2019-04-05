@@ -22,11 +22,11 @@ Class Ticket{
 		$sw=true;
 		
 		//$numero,$numero2,$numero3,$monto,$id_loteria_sub,$sorteo
-		foreach($jugadas as $row)
-        {
-			$sql_detalle = "INSERT INTO tickets_detalles (id_ticket,numero,numero2,numero3,monto,id_loteria_sub,sorteo) VALUES ('$id_ticket','$row["Numero1"]','$row["Numero2"]','$row["Numero3"]','$row["Monto"]','$row["LoteriaId"]','0')";
-			ejecutarConsulta($sql_detalle) or $sw = false;
-		}
+		// foreach($jugadas as $row)
+        // {
+		// 	$sql_detalle = "INSERT INTO tickets_detalles (id_ticket,numero,numero2,numero3,monto,id_loteria_sub,sorteo) VALUES ('$id_ticket','$row["Numero1"]','$row["Numero2"]','$row["Numero3"]','$row["Monto"]','$row["LoteriaId"]','0')";
+		// 	ejecutarConsulta($sql_detalle) or $sw = false;
+		// }
 
 		return $sw;
 	}
