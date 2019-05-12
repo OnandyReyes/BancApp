@@ -10,7 +10,7 @@ if(!isset($_SESSION["nombres"])){
 
 require 'header.php';
 
-if($_SESSION['escritorio']){
+//if($_SESSION['escritorio']){
   // if($_SESSION['id_usuario_tipo'] == 1){
 
 ?>
@@ -27,20 +27,46 @@ if($_SESSION['escritorio']){
                     <div class="col-lg-6 col-md-6 col-sm-6 col-sx-12">
                         <div class="box box-primary">
                           <div class="box-header with-border">
-                            <h2>Prestamos Diario</h2>
+                            <h2>Jugadas de Hoy</h2>
                           </div>
                           <div class="box-body">
-                            <div class="panel-body table-responsive" id="prestamosdiariosegistros">
-                                <table id="diariosEscritorio" class="table table-striped table-bordered table-condensed table-hover">
+                            <div class="panel-body table-responsive" id="jugadashoyriosegistros">
+                                <table id="jugadasHoy" class="table table-striped table-bordered table-condensed table-hover">
                                   <thead>
                                     <th>#</th>
-                                    <th>Cliente</th>
-                                    <th>Cuota</th>
+                                    <th>Usuario</th>
+                                    <th>Fecha</th>
                                     <th>Accion</th>
                                   </thead>
                                   <tbody>
-                                    
+                                  <?php
+                                    require_once "../modelos/Ticket.php";
+
+                                    $ticket= new Ticket();
+                            
+                                    $respuesta=$ticket->listaHoy();
+                                    $data = Array();
+
+                                    while ($objeto = $respuesta->fetch_object()) {
+                                      
+                                      ?>
+                                      <tr>
+                                        <td><?php echo $objeto->id_ticket; ?></td>
+                                        <td><?php echo $objeto->nombres." ".$objeto->apellidos; ?></td>
+                                        <td><?php echo date_format(date_create($objeto->fecha_creacion), 'd/m/Y H:i:s')?></td>
+                                        <td><?php echo '<button id="'.$objeto->id_ticket.'" type="button" class="btn btn-primary abrirModal">Ver</button>' ?></td>
+                                      </tr>
+                                  
+                                  <?php          
+                                    }
+                                  ?>
                                   </tbody>
+                                  <tfoot>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Total : </th>
+                                    <th><?php echo ""; ?></th>
+                                  </tfoot>
                                 </table>
                             </div>
                           </div>
@@ -48,22 +74,44 @@ if($_SESSION['escritorio']){
                       </div>
                     <!-- centro -->
                     <!-- centro -->
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-sx-12">
+                     <!-- centro -->
+                     <div class="col-lg-6 col-md-6 col-sm-6 col-sx-12">
                         <div class="box box-primary">
                           <div class="box-header with-border">
-                            <h2>Prestamos Semanales</h2>
+                            <h2>Premios</h2>
                           </div>
                           <div class="box-body">
-                            <div class="panel-body table-responsive" id="prestamossemanalessegistros">
-                                <table id="semanalesEscritorio" class="table table-striped table-bordered table-condensed table-hover">
+                            <div class="panel-body table-responsive" id="premioshoyriosegistros">
+                                <table id="premiosHoy" class="table table-striped table-bordered table-condensed table-hover">
                                   <thead>
-                                    <th>#</th>
-                                    <th>Cliente</th>
-                                    <th>Cuota</th>
-                                    <th>Accion</th>
+                                    <th>Loteria</th>
+                                    <th>Primera</th>
+                                    <th>Segunda</th>
+                                    <th>Tercera</th>
                                   </thead>
                                   <tbody>
+                                  <?php
+                                    require_once "../modelos/Numeros_ganadores.php";
+
+                                    $numeros_ganadores= new Numeros_ganadores();
+                            
+                                    $respuesta=$numeros_ganadores->listaHoy();
                                     
+                                    $data = Array();
+
+                                   while ($objeto = $respuesta->fetch_object()) {
+                                    
+                                      ?>
+                                      <tr>
+                                        <td><?php echo $objeto->nombre; ?></td>
+                                        <td><?php echo $objeto->primera; ?></td>
+                                        <td><?php echo $objeto->segunda; ?></td>
+                                        <td><?php echo $objeto->tercera; ?></td>
+                                      </tr>
+                                  
+                                  <?php          
+                                    }
+                                  ?>
                                   </tbody>
                                 </table>
                             </div>
@@ -71,55 +119,6 @@ if($_SESSION['escritorio']){
                         </div>
                       </div>
                     <!-- centro -->
-                    <!-- centro -->
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-sx-12">
-                        <div class="box box-primary">
-                          <div class="box-header with-border">
-                            <h2>Prestamos Quincenales</h2>
-                          </div>
-                          <div class="box-body">
-                            <div class="panel-body table-responsive" id="prestamosquincenalesregistros">
-                                <table id="quincenalEscritorio" class="table table-striped table-bordered table-condensed table-hover">
-                                  <thead>
-                                    <th>#</th>
-                                    <th>Cliente</th>
-                                    <th>Cuota</th>
-                                    <th>Accion</th>
-                                  </thead>
-                                  <tbody>
-                                    
-                                  </tbody>
-                                </table>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    <!-- centro -->
-                    <!-- centro -->
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-sx-12">
-                        <div class="box box-primary">
-                          <div class="box-header with-border">
-                            <h2>Prestamos Mensuales</h2>
-                          </div>
-                          <div class="box-body">
-                            <div class="panel-body table-responsive" id="prestamosmensualesregistros">
-                                <table id="mensualesEscritorio" class="table table-striped table-bordered table-condensed table-hover">
-                                  <thead>
-                                    <th>#</th>
-                                    <th>Cliente</th>
-                                    <th>Cuota</th>
-                                    <th>Accion</th>
-                                  </thead>
-                                  <tbody>
-                                    
-                                  </tbody>
-                                </table>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    <!-- centro -->
-                    </div>
                     <!-- /.box-header -->
                     <!--Fin centro -->
                   </div><!-- /.box -->
@@ -129,6 +128,38 @@ if($_SESSION['escritorio']){
 
     </div><!-- /.content-wrapper -->
   <!--Fin-Contenido-->
+  <div class="modal fade" id="myModalTicketDetalle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" >&times;</button>
+          <h4 class="modal-title">Jugadas</h4>
+        </div>
+        <div class="modal-body">
+          <table id="tblticketDetalle" class="table table-striped table-bordered table-condensed table-hover">
+            <thead>
+              <th>Loteria</th>
+              <th>Numeros</th>
+              <th>Tipo</th>
+              <th>Monto</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+            <tfoot>
+              <th>Loteria</th>
+              <th>Numeros</th>
+              <th>Tipo</th>
+              <th>Monto</th>
+            </tfoot>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 <?php
   // }else{
   //   if($_SESSION['id_usuario_tipo'] == 2)
@@ -138,13 +169,38 @@ if($_SESSION['escritorio']){
   //     header("location: mispedidos.php");
     
   // }
-}else{
-  require 'noacceso.php';
-}
+// }else{
+//   require 'noacceso.php';
+// }
 require 'footer.php';
 ?>
+<script>
+function init(){
+	
+	jugadasHoyEscritorio();
+	
+	
+	
+}
 
-<script type="text/javascript" src="scripts/escritorio.js"></script>
+function jugadasHoyEscritorio(){
+	$(".abrirModal").click(function(){
+		var id = this.id;
+		  $.post("../ajax/ticket.php?op=ticketDetalleTable&id="+id,function(r){
+			$("#tblticketDetalle").html(r);
+		  });
+			
+		  $('#myModalTicketDetalle').modal('show');
+		});
+
+	var table = $('#jugadasHoy').DataTable();
+	var table = $('#premiosHoy').DataTable();
+}
+
+
+init();
+</script>
+<!-- <script type="text/javascript" src="scripts/escritorio.js"></script> -->
 
 <?php  
 }

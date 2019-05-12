@@ -3,7 +3,7 @@ $("#formAcceso").on('submit',function(e){
 	correoa=$("#correoa").val();
 	clavea=$("#clavea").val();
 
-	$.post("../ajax/usuario.php?op=verificar",
+	$.post("../ajax/cuentas.php?op=verificar",
 		{"correoa":correoa,"clavea":clavea},
 		function(data){
 			if(data != "null"){

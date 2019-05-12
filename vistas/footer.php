@@ -25,6 +25,9 @@
     
     <script type="text/javascript" src="../public/js/jquery.mask.js"></script>
     <script type="text/javascript" src="../public/js/push.min.js"></script>
-    
+    <script>
+      
+    </script>
+
   </body>
 </html>

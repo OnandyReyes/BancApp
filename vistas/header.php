@@ -7,7 +7,7 @@ if(strlen(session_id()) < 1)
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>PrestaRed</title>
+    <title>Banca</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -40,9 +40,9 @@ if(strlen(session_id()) < 1)
         <!-- Logo -->
         <a href="#" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>P</b>R</span>
+          <span class="logo-mini"><b>B</b>A</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>PrestaRed</b></span>
+          <span class="logo-lg"><b>Banca</b></span>
         </a>
 
         <!-- Header Navbar: style can be found in header.less -->
@@ -72,7 +72,7 @@ if(strlen(session_id()) < 1)
                   <li class="user-footer">
                     
                     <div class="pull-right">
-                      <a href="../ajax/usuario.php?op=salir" class="btn btn-default btn-flat">Cerrar</a>
+                      <a href="../ajax/cuentas.php?op=salir" class="btn btn-default btn-flat">Cerrar</a>
                     </div>
                   </li>
                 </ul>
@@ -91,89 +91,32 @@ if(strlen(session_id()) < 1)
           <ul class="sidebar-menu">
             <li class="header"></li>
             
-            <?php
-            if($_SESSION['perfil']==1){
-              echo '<li>
-              <a href="perfil.php">
-                <i class="fa fa-user"></i> <span>Perfil</span>
-              </a>
-            </li> ';
-            }
-            ?>
-
-            <?php
-            if($_SESSION['escritorio']==1){
-              echo '<li>
+            
+            <li>
               <a href="escritorio.php">
                 <i class="fa fa-tasks"></i> <span>Escritorio</span>
               </a>
-            </li> ';
-            }
-            ?>
-
+            </li> 
             <?php
-            if($_SESSION['cobrar']==1){
-              echo '<li>
-              <a href="cobrar.php">
-                <i class="fa fa-shopping-cart"></i> <span>Cobrar</span>
-              </a>
-            </li> ';
-            }
+              if($_SESSION['id_cuenta_tipo'] == 1){
             ?>
-
-
-            <?php
-            if($_SESSION['prestamo']==1){
-              echo '<li>
-              <a href="prestamo.php">
-                <i class="fa fa-tasks"></i> <span>Prestamos</span>
-              </a>
-            </li> ';
-            }
-            ?>
-
             <li>
-              <a href="grupo.php">
-              <i class="fa fa-tasks"></i> <span>Grupo</span>
+              <a href="numerosGanadores.php">
+                <i class="fa fa-tasks"></i> <span>Numeros Ganadores</span>
               </a>
-            </li>
-
+            </li> 
             <?php
-            if($_SESSION['acceso']==1){
-              echo '<li class="treeview">
-              <a href="#">
-                <i class="fa fa-folder"></i> <span>Usuarios</span>
-                <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              <ul class="treeview-menu">';
-
-              if($_SESSION['usuario']==1){
-                echo '<li><a href="usuario.php"><i class="fa fa-circle-o"></i> Empleados</a></li>';
               }
-
-              if($_SESSION['cliente']==1){
-                echo '<li><a href="cliente.php"><i class="fa fa-circle-o"></i> Clientes</a></li>';
-              }
-
-              echo '</ul>
-            </li>';
-            }
-            ?>   
-
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-folder"></i> <span>Reportes</span>
-                <i class="fa fa-angle-left pull-right"></i>
+            ?>
+            <li>
+              <a href="cuadre.php">
+                <i class="fa fa-tasks"></i> <span>Cuadre</span>
               </a>
-              <ul class="treeview-menu">
-                <li><a href="estadoCuenta.php"><i class="fa fa-circle-o"></i> Estado de Cuenta</a></li>
-              </ul>
-              <ul class="treeview-menu">
-                <li><a href="pagos.php"><i class="fa fa-circle-o"></i> Pagos</a></li>
-              </ul>
-            </li>
+            </li> 
 
-            <li><a href="../ajax/usuario.php?op=salir"><i class="fa fa-circle-o text-red"></i> <span>Cerrar Sesion</span></a></li>
+            
+
+            <li><a href="../ajax/cuentas.php?op=salir"><i class="fa fa-circle-o text-red"></i> <span>Cerrar Sesion</span></a></li>
             <!-- <li>
               <a href="#">
                 <i class="fa fa-plus-square"></i> <span>Ayuda</span>

@@ -7,16 +7,18 @@ define("DB_HOST","localhost");
 define("DB_NAME", "bancapp");
 
 //Usuario de la base de datos
-//define("DB_USERNAME", "root");
-define("DB_USERNAME", "onandy");
+define("DB_USERNAME", "root");
+//define("DB_USERNAME", "onandy");
 
 //Contraseña del usuario de la base de datos
-//define("DB_PASSWORD", "");
-define("DB_PASSWORD", "Onandy");
+define("DB_PASSWORD", "");
+//define("DB_PASSWORD", "Onandy");
 
 //definimos la codificacion de los caracteres
 define("DB_ENCODE", "utf8");
 
 //Definimos una constante como nombre del proyecto
 define("PRO_NOMBRE", "BancApp");
+
+date_default_timezone_set ('America/Santo_Domingo');
 ?>
