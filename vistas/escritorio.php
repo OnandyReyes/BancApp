@@ -37,24 +37,49 @@ require 'header.php';
                                     <th>Usuario</th>
                                     <th>Fecha</th>
                                     <th>Accion</th>
+                                    <th>Estado</th>
                                   </thead>
                                   <tbody>
                                   <?php
                                     require_once "../modelos/Ticket.php";
 
                                     $ticket= new Ticket();
+
+                                    require_once "../modelos/Numeros_ganadores.php";
+
+                                    $numeros_ganadores_hoy = new Numeros_ganadores();
                             
                                     $respuesta=$ticket->listaHoy();
                                     $data = Array();
 
                                     while ($objeto = $respuesta->fetch_object()) {
-                                      
+                                      $estilo = "";
+                                      $premio = "";
+                                      $resultado2 = $numeros_ganadores_hoy->ticketGanador($objeto->id_ticket);
+                                      if($resultado2 > 0){
+                                          $estilo = 'style="background-color:#C7EAB7;"';
+                                          $premio = "Premiado";
+                                      }
+
+                                      //$estilo = 'style="background-color:#C7EAB7;"';
                                       ?>
-                                      <tr>
+                                      <tr <?php echo $estilo; ?> >
                                         <td><?php echo $objeto->id_ticket; ?></td>
                                         <td><?php echo $objeto->nombres." ".$objeto->apellidos; ?></td>
-                                        <td><?php echo date_format(date_create($objeto->fecha_creacion), 'd/m/Y H:i:s')?></td>
-                                        <td><?php echo '<button id="'.$objeto->id_ticket.'" type="button" class="btn btn-primary abrirModal">Ver</button>' ?></td>
+                                        <td><?php echo date_format(date_create($objeto->fecha_creacion), 'd/m/Y H:i:s');?></td>
+                                        <td><?php echo '<button id="'.$objeto->id_ticket.'" type="button" class="btn btn-primary abrirModal">Ver</button>'; ?>
+                                        <?php 
+                                        if($_SESSION['id_cuenta_tipo'] == 1){
+                                            echo '<button class="btn btn-danger" onclick="eliminar('.$objeto->id_ticket.')"><i class="fa fa-close"></i></button>'; 
+                                        }
+                                          
+                                          ?>
+                                        </td>
+                                        <td>
+                                          <?php 
+                                            echo $premio;
+                                          ?>
+                                        </td>
                                       </tr>
                                   
                                   <?php          
@@ -64,8 +89,9 @@ require 'header.php';
                                   <tfoot>
                                     <th></th>
                                     <th></th>
-                                    <th>Total : </th>
+                                    <th></th>
                                     <th><?php echo ""; ?></th>
+                                    <th></th>
                                   </tfoot>
                                 </table>
                             </div>
@@ -175,11 +201,12 @@ require 'header.php';
 require 'footer.php';
 ?>
 <script>
+var table;
+var table2;
+
 function init(){
 	
 	jugadasHoyEscritorio();
-	
-	
 	
 }
 
@@ -193,8 +220,19 @@ function jugadasHoyEscritorio(){
 		  $('#myModalTicketDetalle').modal('show');
 		});
 
-	var table = $('#jugadasHoy').DataTable();
-	var table = $('#premiosHoy').DataTable();
+	table = $('#jugadasHoy').DataTable();
+	table2 = $('#premiosHoy').DataTable();
+}
+
+function eliminar(id_ticket){
+	bootbox.confirm("Esta seguro de eliminar la Jugada?",function(result){
+		if(result){
+			$.post("../ajax/ticket.php?op=eliminar",{id_ticket : id_ticket},function(e){
+				bootbox.alert(e);
+				table.ajax.reload();
+			});
+		}
+	});
 }
 
 

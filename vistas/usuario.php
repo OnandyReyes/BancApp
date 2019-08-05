@@ -7,7 +7,7 @@ if(!isset($_SESSION["nombres"])){
 
 }else{
 require 'header.php';
-if($_SESSION['usuario']){
+
 ?>
 <!--Contenido-->
       <!-- Content Wrapper. Contains page content -->
@@ -18,7 +18,7 @@ if($_SESSION['usuario']){
               <div class="col-md-12">
                   <div class="box">
                     <div class="box-header with-border">
-                          <h1 class="box-title">Empleados <button class="btn btn-success" id="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar</button></h1>
+                          <h1 class="box-title">Usuarios <button class="btn btn-success" id="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar</button></h1>
                         <div class="box-tools pull-right">
                         </div>
                     </div>
@@ -29,9 +29,8 @@ if($_SESSION['usuario']){
                           <thead>
                             <th>Opciones</th>
                             <th>ID</th>
+                            <th>Usuario</th>
                             <th>Nombres</th> 
-                            <th>Apellidos</th>
-                            <th>Cedula</th>
                             <th>Estado</th> 
                           </thead>
                           <tbody>
@@ -40,10 +39,9 @@ if($_SESSION['usuario']){
                           <tfoot>
                             <th>Opciones</th>
                             <th>ID</th>
+                            <th>Usuario</th>
                             <th>Nombres</th> 
-                            <th>Apellidos</th>
-                            <th>Cedula</th>
-                            <th>Estado</th> 
+                            <th>Estado</th>
                           </tfoot>
                         </table>
                     </div>
@@ -52,38 +50,43 @@ if($_SESSION['usuario']){
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>Nombres *</label>
                             <input type="hidden" name="id_usuario" id="id_usuario" >
-                            <input type="text" class="form-control" name="nombres" id="nombres" maxlength="150" placeholder="Nombres" required >
+                            <input type="hidden" name="id_sector" id="id_sector" value="42" >
+                            <input type="text" class="form-control" name="nombres" id="nombres" maxlength="250" placeholder="Nombres" required >
                           </div>
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label>Apellidos *</label>
-                            <input type="text" class="form-control" name="apellidos" id="apellidos" maxlength="150" placeholder="Apellidos" required >
+                            <label>Apellidos </label>
+                            <input type="text" class="form-control" name="apellidos" id="apellidos" maxlength="250" placeholder="Apellidos" >
+                          </div>
+                          <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <label>Usuario *</label>
+                            <input type="text" class="form-control" name="usuario" id="usuario" maxlength="250" placeholder="Usuario" required >
                           </div>
                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>Cédula *</label>
-                            <input type="text" class="form-control" name="cedularnc" id="cedularnc" placeholder="Cédula" data-mask="999-9999999-9" required >
+                            <input type="text" class="form-control" name="cedula" id="cedula" placeholder="Cédula" data-mask="999-9999999-9" required >
                           </div>
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label>Provincias *</label>
-                            <select id="id_provincia" name="id_provincia" class="form-control selectpicker" data-live-search="true" required>
-                            </select>
-                          </div>
-                          <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label>Municipio *</label>
-                            <select id="id_municipio" name="id_municipio" class="form-control selectpicker" data-live-search="true" required>
-                            </select>
+                            <label>Celular *</label>
+                            <input type="text" class="form-control" maxlength="13" name="celular" id="celular" data-mask="999-999-9999" placeholder="Celular" required >
                           </div>
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>Direccion *</label>
                             <input type="text" class="form-control" name="direccion" id="direccion" placeholder="Calle" required >
                           </div>
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <label>Provincias *</label>
+                            <input type="text" class="form-control" name="usuario2" id="usuario2" maxlength="250" placeholder="Usuario" required >
+                          </div>
+                          <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <label>Municipio *</label>
+                            <input type="text" class="form-control" name="usuario3" id="usuario3" maxlength="250" placeholder="Usuario" required >
+                          </div>
+                          
+                          <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>Telefono *</label>
                             <input type="text" class="form-control" maxlength="13" name="telefono" id="telefono" data-mask="999-999-9999" placeholder="Telefono" required >
                           </div>
-                          <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label>Celular *</label>
-                            <input type="text" class="form-control" maxlength="13" name="celular" id="celular" data-mask="999-999-9999" placeholder="Telefono" required >
-                          </div>
+                          
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>Tipo de Usuario *</label>
                             <select id="id_usuario_tipo" name="id_usuario_tipo" class="form-control selectpicker" data-live-search="true" required>
@@ -116,9 +119,6 @@ if($_SESSION['usuario']){
   <!--Fin-Contenido-->
 
 <?php
-}else{
-  require 'noacceso.php';
-}
 require 'footer.php';
 ?>
 

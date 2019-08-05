@@ -5,6 +5,27 @@ Class Cuentas{
     //constructor
 	public function _construct(){
 
+	}
+	
+	//metodo para insertar
+	public function insertar($usuario, $clave, $id_cuenta_tipo, $id_usuario, $estado, $titulo_ticket, $imei, $comision, $prueba){
+		
+		//Aqui hay que hacer pila de codigo antes de guardar la venta
+
+		$sql="INSERT INTO cuentas (usuario, clave, id_cuenta_tipo, id_usuario, estado, titulo_ticket, imei, comision, prueba) 
+        VALUES ('$usuario','$clave','$id_cuenta_tipo','$id_usuario','$estado','$titulo_ticket','$imei','$comision','$prueba')";
+		
+		return ejecutarConsulta($sql);
+	}
+	
+	//metodo para editar
+	public function editar($usuario, $clave, $id_cuenta_tipo, $id_usuario, $estado, $titulo_ticket, $imei, $comision, $prueba){
+		
+		//Aqui hay que hacer pila de codigo antes de guardar la venta
+		$sql="UPDATE cuentas SET usuario='$usuario',clave='$clave',id_cuenta_tipo='$id_cuenta_tipo',estado='$estado',titulo_ticket='$titulo_ticket',imei='$imei,comision='$comision',prueba='$prueba'' WHERE id_usuario='$id_usuario' ";
+		
+
+		return ejecutarConsulta($sql);
     }
 
 	//metodo para insertar

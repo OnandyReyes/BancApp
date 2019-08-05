@@ -114,6 +114,12 @@ if(strlen(session_id()) < 1)
               </a>
             </li> 
 
+            <li>
+              <a href="jugadas.php">
+                <i class="fa fa-tasks"></i> <span>Jugadas</span>
+              </a>
+            </li> 
+
             
 
             <li><a href="../ajax/cuentas.php?op=salir"><i class="fa fa-circle-o text-red"></i> <span>Cerrar Sesion</span></a></li>

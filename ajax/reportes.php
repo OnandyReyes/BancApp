@@ -15,7 +15,7 @@ $fecha = $fecha->format('Y-m-d H:i:m');
 
 
 switch ($_GET["op"]) {
-    case 'cuadreFiltro':
+case 'cuadreFiltro':
     $fecha_inicio=$_GET["fecha_inicio"];
     $fecha_fin=$_GET["fecha_fin"];
     $id_vendedor =$_GET["id_vendedor"];
@@ -110,6 +110,51 @@ switch ($_GET["op"]) {
         <th>'.$total_ganancia.'</th>
       </tfoot>';
 break;
+case 'jugadasFiltro':
+    $fecha_inicio=$_GET["fecha_inicio"];
+    $fecha_fin=$_GET["fecha_fin"];
+    $id_vendedor =$_GET["id_vendedor"];
+    
+    if($id_vendedor == 0){
+        $respuesta=$tickets->ticketsRango( $fecha_inicio, $fecha_fin );
+    }else{
+        $respuesta=$tickets->ticketsIdUsuarioRango($id_vendedor, $fecha_inicio, $fecha_fin );
+    }
 
+    echo '<table id="jugadasHoy" class="table table-striped table-bordered table-condensed table-hover"><thead>
+        <th>#</th>
+        <th>Usuario</th>
+        <th>Fecha</th>
+        <th>Accion</th>
+        <th>Estado</th>
+      </thead><tbody>';
+
+    while ($objeto = $respuesta->fetch_object()) {
+
+        $estilo = "";
+        $premio = "";
+        $resultado2 = $numeros_ganadores->ticketGanador($objeto->id_ticket);
+        if($resultado2 > 0){
+            $estilo = 'style="background-color:#C7EAB7;"';
+            $premio = "Premiado";
+        }
+
+        echo '<tr '.$estilo.' >';
+        echo '<td>'.$objeto->id_ticket.'</td>'; 
+        echo '<td>'.$objeto->nombres." ".$objeto->apellidos.'</td>'; 
+        echo '<td>'.date_format(date_create($objeto->fecha_creacion), 'd/m/Y H:i:s').'</td>';
+        echo '<td><button id="'.$objeto->id_ticket.'" type="button" class="btn btn-primary abrirModal">Ver</button></td>'; 
+        echo '<td>'.$premio.'</td>';
+        echo '</tr>';
+    }
+    
+    echo '</tbody><tfoot>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tfoot></table>';
+break;
 }
 ?>

@@ -60,34 +60,47 @@ Class Ticket{
 	}
 
 	public function ticketsIdUsuario($id_usuario){
-		$sql="SELECT * FROM tickets WHERE id_usuario = '$id_usuario' ";
+		$sql="SELECT * FROM tickets t INNER JOIN cuentas cu on cu.id_usuario = t.id_usuario
+		INNER JOIN usuarios us on us.id_usuario = cu.id_usuario WHERE cu.id_usuario = '$id_usuario' ";
 
 		return ejecutarConsulta($sql);
 	}
 
 	public function ticketsId($id_ticket){
-		$sql="SELECT * FROM tickets WHERE id_ticket = '$id_ticket' ";
+		$sql="SELECT * FROM tickets t INNER JOIN cuentas cu on cu.id_usuario = t.id_usuario
+		INNER JOIN usuarios us on us.id_usuario = cu.id_usuario WHERE id_ticket = '$id_ticket' ";
 
 		return ejecutarConsultaSimpleFila($sql);
 	}
 
 
 	public function ticketsIdUsuarioHoy($id_usuario, $hoy ){
-		$sql="SELECT * FROM tickets WHERE id_usuario = '$id_usuario' AND DATE(fecha_creacion) >= DATE('$hoy') AND DATE(fecha_creacion) <= DATE('$hoy') ";
+		$sql="SELECT * FROM tickets t INNER JOIN cuentas cu on cu.id_usuario = t.id_usuario
+		INNER JOIN usuarios us on us.id_usuario = cu.id_usuario	WHERE cu.id_usuario = '$id_usuario' AND DATE(fecha_creacion) >= DATE('$hoy') AND DATE(fecha_creacion) <= DATE('$hoy') ";
 
 		return ejecutarConsulta($sql);
 		//return $sql;
 	}
 
 	public function ticketsIdUsuarioRango($id_usuario, $fecha_inicio, $fecha_fin ){
-		$sql="SELECT * FROM tickets WHERE id_usuario = '$id_usuario' AND DATE(fecha_creacion) >= DATE('$fecha_inicio') AND DATE(fecha_creacion) <= DATE('$fecha_fin') ";
+		$sql="SELECT * FROM tickets t INNER JOIN cuentas cu on cu.id_usuario = t.id_usuario
+		INNER JOIN usuarios us on us.id_usuario = cu.id_usuario	WHERE cu.id_usuario = '$id_usuario' AND DATE(fecha_creacion) >= DATE('$fecha_inicio') AND DATE(fecha_creacion) <= DATE('$fecha_fin') ";
+
+		return ejecutarConsulta($sql);
+		//return $sql;
+	}
+
+	public function ticketsRango( $fecha_inicio, $fecha_fin ){
+		$sql="SELECT * FROM tickets t INNER JOIN cuentas cu on cu.id_usuario = t.id_usuario
+		INNER JOIN usuarios us on us.id_usuario = cu.id_usuario WHERE DATE(fecha_creacion) >= DATE('$fecha_inicio') AND DATE(fecha_creacion) <= DATE('$fecha_fin') ";
 
 		return ejecutarConsulta($sql);
 		//return $sql;
 	}
 
 	public function ticketsIdUsuarioRangoFecha($id_usuario, $desde, $hasta ){
-		$sql="SELECT * FROM tickets WHERE id_usuario = '$id_usuario' AND DATE(fecha_creacion) >= '$desde' AND DATE(fecha_creacion) <= '$hasta' ";
+		$sql="SELECT * FROM tickets t INNER JOIN cuentas cu on cu.id_usuario = t.id_usuario
+		INNER JOIN usuarios us on us.id_usuario = cu.id_usuario	WHERE cu.id_usuario = '$id_usuario' AND DATE(fecha_creacion) >= '$desde' AND DATE(fecha_creacion) <= '$hasta' ";
 
 		return ejecutarConsulta($sql);
 		//return $sql;
@@ -140,7 +153,7 @@ Class Ticket{
 
 
 	//metodo para eliminar
-	public function anular($id_ticket){
+	public function eliminar($id_ticket){
 		$sw=true;
 
 		$sql= "DELETE FROM tickets_detalles WHERE id_ticket = '$id_ticket' ";

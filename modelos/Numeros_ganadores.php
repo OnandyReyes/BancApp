@@ -68,6 +68,47 @@ Class Numeros_ganadores{
 		return $tipo;
 	}
 
+	public function ticketGanador($id_ticket){
+		$premio = 0;
+
+		require_once "../modelos/Ticket.php";
+		$tickets= new Ticket();
+
+		require_once "../modelos/Cuentas.php";
+        $cuentas= new Cuentas();
+
+		$DetalleTicket = $tickets->ticketsId($id_ticket);
+
+		$usuario = $cuentas->seleccionar($DetalleTicket["id_usuario"]);
+
+		$tickets_detalles = $tickets->DetalleTicketId($id_ticket);
+		
+		while($objeto3 = $tickets_detalles->fetch_object()){
+            
+			$tipoJugada = "";
+
+			if($objeto3->numero >= 0){
+				$tipoJugada = "Quiniela";
+			}
+
+			if($objeto3->numero2 >= 0){
+				$tipoJugada = "Pale";
+			}
+
+			if($objeto3->numero3 >= 0){
+				$tipoJugada = "Tripleta";
+			}
+
+			$variable_tickets_detalle = $tickets->DetalleTicketIdTicket($objeto3->id_ticket_detalle);
+			$variable_numeros_ganadores = $this->ganadoresLoteriaId($objeto3->id_loteria_sub, $DetalleTicket["fecha_creacion"]);
+	
+			$premio += $this->verificarGanador($variable_tickets_detalle, $variable_numeros_ganadores, $usuario, $tipoJugada );
+
+		}
+		
+		return $premio;
+	}
+
 	public function verificarGanador($tickets_detalles, $numeros_ganadores, $usuario, $tipo){
 		
 		//$tipo = $this->tipoJugada($tickets_detalles["numero"], $tickets_detalles["numero2"], $tickets_detalles["numero3"]);
@@ -127,7 +168,7 @@ Class Numeros_ganadores{
 			$premio += $tickets_detalles["monto"] * $usuario["pale"];
 		}
 
-		if($tickets_detalles["numer2"] == $numeros_ganadores["primera"] &&
+		if($tickets_detalles["numero2"] == $numeros_ganadores["primera"] &&
 			$tickets_detalles["numero"] == $numeros_ganadores["tercera"]){
 			$premio += $tickets_detalles["monto"] * $usuario["pale"];
 		}

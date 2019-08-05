@@ -49,6 +49,7 @@ switch ($_GET["op"]) {
         $respuesta4 = $cuentas->verificarCuentaPorImei($new_usuario);
 
         $estadoCuenta = $respuesta4["estado"];
+        $celular = $respuesta4["celular"];
         $id_usuario = 0;
 
         
@@ -85,15 +86,20 @@ switch ($_GET["op"]) {
     
                         $nombreLoteria = $respuesta3["nombre"];
 
-                        //015242001395103
-                        if($horarioEntero >= $horarioLoteriaAperturaEntero && $horarioEntero <= $horarioLoteriaCierreEntero ){
-                            $estado = true;
-                            $msj = " esta dentro del rango!";
-                        }else{
-                            $estado = false;
-                            $msj = $nombreLoteria." esta cerrada actualmente!";
-                            break;
-                        }
+                        //357217075004290
+                        // if($new_usuario == "357217075004290"){
+                        //     $estado = true;
+                        // }else{
+                            if($horarioEntero >= $horarioLoteriaAperturaEntero && $horarioEntero <= $horarioLoteriaCierreEntero ){
+                                $estado = true;
+                                $msj = " esta dentro del rango!";
+                            }else{
+                                $estado = false;
+                                $msj = $nombreLoteria." esta cerrada actualmente!";
+                                break;
+                            }
+                        //}
+                        
                         
                         require_once "../modelos/Bloqueos.php";
                         $bloqueos = new Bloqueos();
@@ -149,7 +155,8 @@ switch ($_GET["op"]) {
             "id_ticket" => $id_ticket,
             "fecha" => $fecha,
             "nombre_loteria" => $new_usuario,
-            "linea" => $mostrar
+            "linea" => $mostrar,
+            "celular" => $celular
 		];
 
 		echo json_encode($array);
@@ -160,6 +167,7 @@ switch ($_GET["op"]) {
         $nombreBanca = "BANCA RO";
         $id_ticket = 0;
         $fecha = "";
+        $celular = "809-590-0455";
 
         require_once "../modelos/Cuentas.php";
         $cuentas = new Cuentas();
@@ -186,7 +194,8 @@ switch ($_GET["op"]) {
             //"query" =>  $horarioLoteriaAperturaEntero,
             "id_ticket" => $id_ticket,
             "fecha" => $fecha,
-            "jugadas" => $jugadas
+            "jugadas" => $jugadas,
+            "celular" => $celular
 		];
 
 		echo json_encode($array);

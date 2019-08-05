@@ -60,7 +60,7 @@ switch ($_GET["op"]) {
         echo json_encode($resultados);
 
     break;
-    case 'ticketDetalleTable':
+case 'ticketDetalleTable':
     //Recibimos el id_producto
     $id=$_GET['id'];
 
@@ -104,6 +104,81 @@ switch ($_GET["op"]) {
                 $fecha = $fecha->format('Y-m-d H:i:m');
     
                 $variable_numeros_ganadores = $numeros_ganadores->ganadoresLoteriaId($objeto->id_loteria_sub, $fecha);
+                
+                $variable_ticket = $ticket->ticketsId($objeto->id_ticket);
+                
+                $variable_usuario = $cuentas->seleccionar($variable_ticket["id_usuario"]);
+                
+                $premio = $numeros_ganadores->verificarGanador($variable_tickets_detalle, $variable_numeros_ganadores, $variable_usuario,$tipoJugada );
+    
+
+                
+                // $data[]=array(
+                //     "0"=>$objeto->nombre,
+                //     "1"=>$numeros,
+                //     "2"=>$tipoJugada,
+                //     "3"=>$objeto->nombre
+                // );
+
+        echo '<tr>
+        <td>'.$objeto->nombre.'</td>
+        <td>'.$numeros.'</td>
+        <td>'.$tipoJugada.'</td>
+        <td>'.$objeto->monto.'</td>
+        <td>'.$premio.'</td>
+        </tr>';
+    }
+
+    echo '<tfoot>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                          </tfoot>';
+
+break;
+case 'ticketDetalleTableFechaTicket':
+    //Recibimos el id_producto
+    $id=$_GET['id'];
+
+    $respuesta=$ticket->DetalleTicketId($id);
+    
+    echo '<thead>
+                           <th>Loteria</th>
+                            <th>Numeros</th>
+                            <th>Tipo</th>
+                            <th>Monto</th>
+                            <th>Premio</th>
+                          </thead>';
+
+
+    while ($objeto = $respuesta->fetch_object()) {
+                $numeros = "";
+                $tipoJugada = "";
+
+                if($objeto->numero >= 0){
+                    $numeros .= $objeto->numero;
+                    $tipoJugada = "Quiniela";
+                }
+
+                if($objeto->numero2 >= 0){
+                    $numeros .= "-".$objeto->numero2;
+                    $tipoJugada = "Pale";
+                }
+
+                if($objeto->numero3 >= 0){
+                    $numeros .= "-".$objeto->numero3;
+                    $tipoJugada = "Tripleta";
+                }
+
+                $premio = 0;
+            
+                $variable_tickets_detalle = $ticket->DetalleTicketIdTicket($objeto->id_ticket_detalle);
+                
+                date_default_timezone_set ('America/Santo_Domingo');
+    
+                $variable_numeros_ganadores = $numeros_ganadores->ganadoresLoteriaId($objeto->id_loteria_sub, $objeto->fecha_creacion);
                 
                 $variable_ticket = $ticket->ticketsId($objeto->id_ticket);
                 
@@ -206,6 +281,11 @@ echo '<tfoot>
                         <th></th>
                       </tfoot></table>';
 
+break;
+case 'eliminar':
+    $id_ticket = $_POST["id_ticket"];
+	$respuesta = $ticket->eliminar($id_ticket);
+	echo $respuesta ? "Jugada eliminado" : "Jugada no se puede eliminar";
 break;
     
 }

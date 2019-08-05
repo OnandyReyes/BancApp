@@ -65,7 +65,7 @@ Class Bloqueos{
 			
 			$estado = false;
 
-			if($monto > $usuario["bloqueoPale"]){
+			if($monto > $usuario["bloqueoNumero"]){
 				$estado = true;
 			}
 
